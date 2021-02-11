@@ -19,6 +19,7 @@ class CreateProductsTable extends Migration
             $table->string("description");
             $table->unsignedFloat("price");
             $table->string("image");
+            $table->timestamps();
         });
     }
 

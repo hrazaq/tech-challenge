@@ -17,11 +17,20 @@ class CreateProductCategoriesTable extends Migration
             $table->id();
             $table->unsignedBigInteger('product_id');
             $table->unsignedBigInteger('category_id');
+            $table->timestamps();
         });
 
         Schema::table('product_categories', function (Blueprint $table) {
-            $table->foreign('product_id')->references('id')->on('products')->cascadeOnDelete();
-            $table->foreign('category_id')->references('id')->on('categories')->cascadeOnDelete();
+
+            $table->foreign('product_id')
+                  ->references('id')
+                  ->on('products')
+                  ->cascadeOnDelete();
+
+            $table->foreign('category_id')
+                  ->references('id')
+                  ->on('categories')
+                  ->cascadeOnDelete();
         });
     }
 
