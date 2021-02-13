@@ -10,9 +10,18 @@ class Product extends Model
     use HasFactory;
 
     protected $table = 'products';
+    public $timestamps = false;
 
-    public function category()
+    protected $fillable = [
+        'name',
+        'description',
+        'price',
+        'image'
+    ];
+
+    public function categories()
     {
-        return $this->belongsTo(Category::class);
+        return $this->belongsToMany(Category::class, 'product_category', 'product_id', 'category_id');
     }
+    
 }
