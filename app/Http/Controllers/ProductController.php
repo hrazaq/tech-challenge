@@ -18,7 +18,7 @@ class ProductController extends Controller
 
     public function index()
     {
-        return "welcome";
+        return view("welcome");
     }
 
     public function all()
@@ -31,10 +31,11 @@ class ProductController extends Controller
     public function create(Request $req)
     {
         $data = $req->all();
-        $data["product"]["image"] = $this->productService->decodeBase64($data["product"]["image"]);
-        $createdProduct = $this->productService->create($data);
+        // $data["product"]["image"] = 'image.png';
+        // $createdProduct = $this->productService->create($data);
+        return $data["product"]["image"]->getClientOriginalName();
 
-        return response()->json($createdProduct, 201);
+        // return response()->json($req->file, 201);
     }
 
     public function filterByCategory($id)

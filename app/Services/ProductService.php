@@ -23,7 +23,11 @@ class ProductService
         $createdProduct = [];
 
         if ($this->checkFields($data["product"])) {
-            $data["product"]["image"] = $this->uploadImage($data["product"]["image"]);
+            
+            // $data["product"]["image"] = $this->decodeBase64($data["product"]["image"]);
+            // $data["product"]["image"] = $this->uploadImage($data["product"]["image"]);
+            $data["product"]["image"] = 'image.png';
+         
             $createdProduct = $this->productRepository->create($data);
         } else {
             abort(500, "The given data is invalid");

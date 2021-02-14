@@ -21,7 +21,7 @@ class ProductRepository
         $createdProduct = Product::create($data['product']);
         $createdProduct->categories()->attach($data['categories']);
 
-        return $data;
+        return $createdProduct;
     }
 
     public function find(int $id): bool
