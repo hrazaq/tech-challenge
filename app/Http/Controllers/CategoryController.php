@@ -19,4 +19,9 @@ class CategoryController extends Controller
         return $this->categoryService->all();
     }
 
+    public function getIds()
+    {
+        return $this->categoryService->getIds();
+    }
+
 }

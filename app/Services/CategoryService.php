@@ -37,4 +37,11 @@ class CategoryService
         $this->categoryRepository->delete($id);
     }
 
+    public function getIds()
+    {
+        $categoryIds = $this->categoryRepository->getIds();
+
+        return $categoryIds;
+    }
+
 }

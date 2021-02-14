@@ -16,6 +16,13 @@ class ProductRepository
         return $products;
     }
 
+    public function getIds(): collection
+    {
+        $products = Product::all('id');
+
+        return $products;
+    }
+
     public function create(array $data): object
     {
         $createdProduct = Product::create($data['product']);

@@ -33,4 +33,12 @@ class CategoryRepository
     {
         Category::find($id)->delete();
     }
+
+    public function getIds()
+    {
+        $categoryIds = Category::where('id' ,'>' ,0)->pluck('id')->all();
+        
+
+        return $categoryIds;
+    }
 }
