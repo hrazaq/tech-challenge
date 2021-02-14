@@ -2052,7 +2052,7 @@ __webpack_require__.r(__webpack_exports__);
       this.showModal = !this.showModal;
     },
     imageUrl: function imageUrl(link) {
-      return "\\images\\" + link;
+      return link;
     },
     sortByName: function sortByName() {
       this.filredProducts = _.sortBy(this.filredProducts, function (x) {
@@ -2238,7 +2238,8 @@ __webpack_require__.r(__webpack_exports__);
       url: "",
       product: this.freshProduct(),
       selectedCategorie: null,
-      disabled: false
+      disabled: false,
+      image: ''
     };
   },
   mounted: function mounted() {},
@@ -2246,12 +2247,25 @@ __webpack_require__.r(__webpack_exports__);
     toggelModal: function toggelModal() {
       this.$emit("toggelModal");
     },
+    uploadImage: function uploadImage() {
+      var formData = new FormData();
+      var file = this.image;
+      formData.append('file', file);
+      var config = {
+        header: {
+          "content-type": "multipart/form-data"
+        }
+      };
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('api/image', formData, config).then(function (response) {
+        console.log(response);
+      })["catch"](function (error) {
+        console.log(error);
+      });
+    },
     addProduct: function addProduct() {
       var _this = this;
 
-      var image = this.$refs.file.files[0];
-      this.product.image = image;
-      var file = image;
+      this.uploadImage();
       this.disabled = true;
       var data = {
         product: Object.assign({}, this.product),
@@ -2259,8 +2273,6 @@ __webpack_require__.r(__webpack_exports__);
           return a.id;
         })
       };
-      var formData = new FormData();
-      formData.append('file[0]', file);
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("/api/addProduct", data).then(function (res) {
         _this.$emit("addSuccess", res.data);
 
@@ -2277,9 +2289,16 @@ __webpack_require__.r(__webpack_exports__);
       this.$refs["file"].click();
     },
     changed: function changed(e) {
+      var _this2 = this;
+
       var file = e.target.files[0];
       var url = URL.createObjectURL(file);
-      var reader = new FileReader(); // reader.onloadend = () => (this.product.image = file);
+      var reader = new FileReader();
+
+      reader.onloadend = function () {
+        _this2.image = file;
+        _this2.product.image = '/images/' + file.name;
+      };
 
       reader.readAsDataURL(file);
       this.url = url;
@@ -2302,7 +2321,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     clearSelectedImage: function clearSelectedImage() {
       this.url = "";
-      this.product.image = "";
+      this.image = "";
     }
   }
 });
@@ -59667,6 +59686,24 @@ var render = function() {
                                       "div",
                                       { staticClass: "flex items-center" },
                                       [
+                                        _c(
+                                          "div",
+                                          {
+                                            staticClass:
+                                              "flex-shrink-0 h-10 w-10"
+                                          },
+                                          [
+                                            _c("img", {
+                                              staticClass:
+                                                "h-10 w-10 rounded-full",
+                                              attrs: {
+                                                src: _vm.imageUrl(p.image),
+                                                alt: ""
+                                              }
+                                            })
+                                          ]
+                                        ),
+                                        _vm._v(" "),
                                         _c("div", { staticClass: "ml-4" }, [
                                           _c(
                                             "div",

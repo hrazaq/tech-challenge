@@ -62,13 +62,13 @@
                   <tr v-for="p in filredProducts" :key="p.id">
                     <td class="px-6 py-4 whitespace-nowrap">
                       <div class="flex items-center">
-                        <!-- <div class="flex-shrink-0 h-10 w-10">
+                        <div class="flex-shrink-0 h-10 w-10">
                           <img
                             class="h-10 w-10 rounded-full"
                             :src="imageUrl(p.image)"
                             alt=""
                           />
-                        </div> -->
+                        </div>
                         <div class="ml-4">
                           <div class="text-sm font-medium text-gray-900">
                             {{ p.name }}
@@ -136,7 +136,7 @@ export default {
       this.showModal = !this.showModal;
     },
     imageUrl(link) {
-      return "\\images\\" + link;
+      return link;
     },
     sortByName() {
       this.filredProducts = _.sortBy(this.filredProducts, (x) => x.name.toLowerCase());

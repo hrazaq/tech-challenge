@@ -143,6 +143,7 @@ export default {
       product: this.freshProduct(),
       selectedCategorie: null,
       disabled: false,
+      image: ''
     };
   },
   mounted() {},
@@ -150,24 +151,34 @@ export default {
     toggelModal: function () {
       this.$emit("toggelModal");
     },
+    uploadImage(){
+        let formData = new FormData();
+        let file = this.image;
+        formData.append('file', file);
+        const config = {
+          header:{"content-type" : "multipart/form-data"}
+        }
+
+        Axios
+        .post('api/image', formData, config)
+        .then(response =>{
+          console.log(response);
+        })
+        .catch(error =>{
+          console.log(error);
+        })
+
+    },
     addProduct() {
 
-      var image = this.$refs.file.files[0];
-
-      
-      this.product.image = image;
-      var file = image;
+      this.uploadImage();
 
       this.disabled = true;
       var data = {
         product: Object.assign({}, this.product),
         categories: this.product.categories.map((a) => a.id),
       };
-
-      var formData = new FormData();
-
-      formData.append('file[0]', file);
-   
+      
       Axios.post("/api/addProduct", data)
         .then((res) => {
           this.$emit("addSuccess", res.data);
@@ -188,7 +199,10 @@ export default {
       const file = e.target.files[0];
       let url = URL.createObjectURL(file);
       let reader = new FileReader();
-      // reader.onloadend = () => (this.product.image = file);
+      reader.onloadend = () => {
+        this.image = file;
+        this.product.image = '/images/' + file.name;
+      }
       reader.readAsDataURL(file);
       this.url = url;
     },
@@ -211,7 +225,7 @@ export default {
     },
     clearSelectedImage() {
       this.url = "";
-      this.product.image = "";
+      this.image = "";
     },
   },
 };

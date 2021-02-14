@@ -31,11 +31,9 @@ class ProductController extends Controller
     public function create(Request $req)
     {
         $data = $req->all();
-        // $data["product"]["image"] = 'image.png';
-        // $createdProduct = $this->productService->create($data);
-        return $data["product"]["image"]->getClientOriginalName();
+        $createdProduct = $this->productService->create($data);
 
-        // return response()->json($req->file, 201);
+        return response()->json($createdProduct, 201);
     }
 
     public function filterByCategory($id)
