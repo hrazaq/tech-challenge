@@ -1,10 +1,10 @@
 <template>
   <div>
     <div
-      v-if="showModal"
+      v-if="showModal" 
       class="overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none justify-center items-center flex"
     >
-      <div class="relative w-auto my-6 mx-auto max-w-3xl">
+      <div class="relative w-auto my-10 mx-auto max-w-3xl" id="modal-product">
         <!--content-->
         <div
           class="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none"
@@ -132,6 +132,12 @@
     <div v-if="showModal" class="opacity-25 fixed inset-0 z-40 bg-black"></div>
   </div>
 </template>
+
+<style scoped>
+  #modal-product{
+    width: 100%;
+  }
+</style>
 
 <script>
 import Axios from "axios";
