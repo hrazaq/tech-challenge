@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Repositories\ProductRepository;
+use App\Helpers\FileHelper;
 
 class ProductService
 {
@@ -54,46 +55,5 @@ class ProductService
     {
         return $this->productRepository->filterByCategory($id);
     }
-
-    // protected function uploadImage(array $data): string
-    // {
-    //     $imagePath = "";
-
-    //     if (!empty($data["name"])) {
-    //         file_put_contents(public_path('images/') . $data['name'], $data['content']);
-    //         $imagePath = $data['name'];
-    //     } else {
-    //         $imagePath = "noIamge.png";
-    //     }
-
-    //     return $imagePath;
-    // }
-
-    // public function decodeBase64(?string $image): array
-    // {
-    //     $data = [];
-        
-    //     if (!empty($image)) {
-    //         $encoded = explode(";base64,", $image);
-    //         $content = base64_decode($encoded[1]);
-    //         $name = time() . '.' . substr($image, 11, strpos($image, ';') - 11);
-    //         $data = ["content" => $content, "name" => $name];
-    //     }
-
-    //     return $data;
-    // }
-
-    // public function getUrlContent(?string $url): array
-    // {
-    //     $data = [];
-
-    //     if (!empty($image)) {
-    //         $content = file_get_contents($url);
-    //         $name = time() . '.' . substr($url, strrpos($url, '.') + 1);
-    //         $data = ["content" => $content, "name" => $name];
-    //     }
-
-    //     return $data;
-    // }
 
 }
