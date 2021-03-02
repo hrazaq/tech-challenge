@@ -146,7 +146,7 @@ export default {
   data() {
     return {
       url: "",
-      product: this.freshProduct(),
+      product: this.newProduct(),
       selectedCategorie: null,
       disabled: false,
       image: ''
@@ -168,7 +168,8 @@ export default {
         Axios
         .post('api/image', formData, config)
         .then(response =>{
-          console.log(response);
+          this.product.image = response.data['imagelink'];
+          // console.log(response);
         })
         .catch(error =>{
           console.log(error);
@@ -182,20 +183,22 @@ export default {
       this.disabled = true;
       var data = {
         product: Object.assign({}, this.product),
-        categories: this.product.categories.map((a) => a.id),
+        categories: this.product.categories.map((data) => data.id),
       };
+
+      // console.log(data);
       
       Axios.post("/api/addProduct", data)
-        .then((res) => {
-          this.$emit("addSuccess", res.data);
-          console.log(res);
+        .then((result) => {
+          this.$emit("addSuccess", result.data);
+          // console.log(result);
         })
-        .finally((err) => {
-          this.product = this.freshProduct();
+        .finally((error) => {
+          this.product = this.newProduct();
           this.url = "";
           this.selectedCategorie = null;
           this.disabled = false;
-          console.log(err);
+          console.log(error);
         });
     },
     showFileInput() {
@@ -217,7 +220,7 @@ export default {
       if (this.product.categories.indexOf(this.selectedCategorie) < 0)
         this.product.categories.push(this.selectedCategorie);
     },
-    freshProduct() {
+    newProduct() {
       return {
         name: "",
         description: "",

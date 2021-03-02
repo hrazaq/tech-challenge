@@ -113,14 +113,14 @@ export default {
   },
   mounted() {
     Axios.get("/api/products")
-      .then((res) => {
-        this.products = res.data;
+      .then((result) => {
+        this.products = result.data;
         this.filredProducts = this.products;
       })
-      .catch((err) => console.log(err));
+      .catch((error) => console.log(error));
     Axios.get("/api/categories")
-      .then((res) => (this.categories = res.data))
-      .catch((err) => console.log(err));
+      .then((result) => (this.categories = result.data))
+      .catch((error) => console.log(error));
   },
   data() {
     return {
@@ -136,7 +136,7 @@ export default {
       this.showModal = !this.showModal;
     },
     imageUrl(link) {
-      return link;
+      return 'storage' + link;
     },
     sortByName() {
       this.filredProducts = _.sortBy(this.filredProducts, (x) => x.name.toLowerCase());
@@ -148,8 +148,8 @@ export default {
       if (this.selectedCatgorie == null) {
         this.filredProducts = this.products;
       } else {
-        Axios.get("/api/category/" + this.selectedCatgorie.id+"/products").then((res) => {
-          this.filredProducts = res.data;
+        Axios.get("/api/category/" + this.selectedCatgorie.id+"/products").then((result) => {
+          this.filredProducts = result.data;
         });
       }
     },

@@ -26,8 +26,14 @@ class ProductRepository
     public function create(array $data): object
     {
         $createdProduct = Product::create($data['product']);
-        $createdProduct->categories()->attach($data['categories']);
-
+        $createdProductId = $createdProduct['id'];
+        // $createdProduct->categories()->attach($data['categories']);
+        foreach ($data['categories'] as $key => $category) {
+            $object['product_id'] =  $createdProductId;
+            $object['category_id'] = $category;
+            ProductCategory::create($object);
+        }
+    
         return $createdProduct;
     }
 

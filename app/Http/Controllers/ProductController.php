@@ -28,12 +28,13 @@ class ProductController extends Controller
         return response()->json($products, 201);
     }
 
-    public function create(Request $req)
+    public function create(Request $request)
     {
-        $data = $req->all();
+        $data = $request->all();
         $createdProduct = $this->productService->create($data);
+    
 
-        return response()->json($createdProduct, 201);
+        return $createdProduct;
     }
 
     public function filterByCategory($id)

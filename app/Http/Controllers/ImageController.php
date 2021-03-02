@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ImageController extends Controller
 {
@@ -11,13 +12,13 @@ class ImageController extends Controller
         if ($request->hasFile('file')) {
             // store file
             $file = $request->file('file');
-            $filename = '/images/' .$file->getClientOriginalName();
-            $file->move(public_path('images'), $filename);
-        
-            $picture = json_encode($filename);
+            $fileName = $file->getClientOriginalName();
+
+            $saved = Storage::putFileAs('public/images', $file , $fileName);
+
             return response()->json([
                 'message' => 'Image uploaded !', 
-                'image' => $picture
+                'link' => $saved
             ]);
 
         } else {

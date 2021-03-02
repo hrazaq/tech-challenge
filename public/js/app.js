@@ -2026,16 +2026,16 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     var _this = this;
 
-    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/api/products").then(function (res) {
-      _this.products = res.data;
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/api/products").then(function (result) {
+      _this.products = result.data;
       _this.filredProducts = _this.products;
-    })["catch"](function (err) {
-      return console.log(err);
+    })["catch"](function (error) {
+      return console.log(error);
     });
-    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/api/categories").then(function (res) {
-      return _this.categories = res.data;
-    })["catch"](function (err) {
-      return console.log(err);
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/api/categories").then(function (result) {
+      return _this.categories = result.data;
+    })["catch"](function (error) {
+      return console.log(error);
     });
   },
   data: function data() {
@@ -2052,7 +2052,7 @@ __webpack_require__.r(__webpack_exports__);
       this.showModal = !this.showModal;
     },
     imageUrl: function imageUrl(link) {
-      return link;
+      return 'storage' + link;
     },
     sortByName: function sortByName() {
       this.filredProducts = _.sortBy(this.filredProducts, function (x) {
@@ -2070,8 +2070,8 @@ __webpack_require__.r(__webpack_exports__);
       if (this.selectedCatgorie == null) {
         this.filredProducts = this.products;
       } else {
-        axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/api/category/" + this.selectedCatgorie.id + "/products").then(function (res) {
-          _this2.filredProducts = res.data;
+        axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/api/category/" + this.selectedCatgorie.id + "/products").then(function (result) {
+          _this2.filredProducts = result.data;
         });
       }
     },
@@ -2242,7 +2242,7 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       url: "",
-      product: this.freshProduct(),
+      product: this.newProduct(),
       selectedCategorie: null,
       disabled: false,
       image: ''
@@ -2254,6 +2254,8 @@ __webpack_require__.r(__webpack_exports__);
       this.$emit("toggelModal");
     },
     uploadImage: function uploadImage() {
+      var _this = this;
+
       var formData = new FormData();
       var file = this.image;
       formData.append('file', file);
@@ -2263,47 +2265,47 @@ __webpack_require__.r(__webpack_exports__);
         }
       };
       axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('api/image', formData, config).then(function (response) {
-        console.log(response);
+        _this.product.image = response.data['imagelink']; // console.log(response);
       })["catch"](function (error) {
         console.log(error);
       });
     },
     addProduct: function addProduct() {
-      var _this = this;
+      var _this2 = this;
 
       this.uploadImage();
       this.disabled = true;
       var data = {
         product: Object.assign({}, this.product),
-        categories: this.product.categories.map(function (a) {
-          return a.id;
+        categories: this.product.categories.map(function (data) {
+          return data.id;
         })
-      };
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("/api/addProduct", data).then(function (res) {
-        _this.$emit("addSuccess", res.data);
+      }; // console.log(data);
 
-        console.log(res);
-      })["finally"](function (err) {
-        _this.product = _this.freshProduct();
-        _this.url = "";
-        _this.selectedCategorie = null;
-        _this.disabled = false;
-        console.log(err);
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("/api/addProduct", data).then(function (result) {
+        _this2.$emit("addSuccess", result.data); // console.log(result);
+
+      })["finally"](function (error) {
+        _this2.product = _this2.newProduct();
+        _this2.url = "";
+        _this2.selectedCategorie = null;
+        _this2.disabled = false;
+        console.log(error);
       });
     },
     showFileInput: function showFileInput() {
       this.$refs["file"].click();
     },
     changed: function changed(e) {
-      var _this2 = this;
+      var _this3 = this;
 
       var file = e.target.files[0];
       var url = URL.createObjectURL(file);
       var reader = new FileReader();
 
       reader.onloadend = function () {
-        _this2.image = file;
-        _this2.product.image = '/images/' + file.name;
+        _this3.image = file;
+        _this3.product.image = '/images/' + file.name;
       };
 
       reader.readAsDataURL(file);
@@ -2313,7 +2315,7 @@ __webpack_require__.r(__webpack_exports__);
       //if the categorie not already checked
       if (this.product.categories.indexOf(this.selectedCategorie) < 0) this.product.categories.push(this.selectedCategorie);
     },
-    freshProduct: function freshProduct() {
+    newProduct: function newProduct() {
       return {
         name: "",
         description: "",
@@ -73277,8 +73279,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/bigsur/Desktop/tech-challenge/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /Users/bigsur/Desktop/tech-challenge/resources/css/app.css */"./resources/css/app.css");
+__webpack_require__(/*! /Users/bigsur/Desktop/files 2/NextMEDIA/tech-challenge/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /Users/bigsur/Desktop/files 2/NextMEDIA/tech-challenge/resources/css/app.css */"./resources/css/app.css");
 
 
 /***/ })
