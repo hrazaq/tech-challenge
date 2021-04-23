@@ -2026,13 +2026,13 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     var _this = this;
 
-    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/api/products").then(function (result) {
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/products").then(function (result) {
       _this.products = result.data;
       _this.filredProducts = _this.products;
     })["catch"](function (error) {
       return console.log(error);
     });
-    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/api/categories").then(function (result) {
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/categories").then(function (result) {
       return _this.categories = result.data;
     })["catch"](function (error) {
       return console.log(error);
@@ -2055,13 +2055,13 @@ __webpack_require__.r(__webpack_exports__);
       return 'storage' + link;
     },
     sortByName: function sortByName() {
-      this.filredProducts = _.sortBy(this.filredProducts, function (x) {
-        return x.name.toLowerCase();
+      this.filredProducts = _.sortBy(this.filredProducts, function (product) {
+        return product.name.toLowerCase();
       });
     },
     sortByPrice: function sortByPrice() {
-      this.filredProducts = _.sortBy(this.filredProducts, function (x) {
-        return parseFloat(x.price);
+      this.filredProducts = _.sortBy(this.filredProducts, function (product) {
+        return parseFloat(product.price);
       });
     },
     categorieChanged: function categorieChanged() {
@@ -2070,14 +2070,14 @@ __webpack_require__.r(__webpack_exports__);
       if (this.selectedCatgorie == null) {
         this.filredProducts = this.products;
       } else {
-        axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/api/category/" + this.selectedCatgorie.id + "/products").then(function (result) {
+        axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/category/" + this.selectedCatgorie.id + "/products").then(function (result) {
           _this2.filredProducts = result.data;
         });
       }
     },
-    addSuccess: function addSuccess(p) {
+    addSuccess: function addSuccess(product) {
       this.toggelModal();
-      this.products.push(p);
+      this.products.push(product);
     }
   }
 });
@@ -2238,7 +2238,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ["showModal", "cats"],
+  props: ["showModal", "categories"],
   data: function data() {
     return {
       url: "",
@@ -2264,7 +2264,7 @@ __webpack_require__.r(__webpack_exports__);
           "content-type": "multipart/form-data"
         }
       };
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('api/image', formData, config).then(function (response) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post('/image', formData, config).then(function (response) {
         _this.product.image = response.data['imagelink']; // console.log(response);
       })["catch"](function (error) {
         console.log(error);
@@ -2282,7 +2282,7 @@ __webpack_require__.r(__webpack_exports__);
         })
       }; // console.log(data);
 
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("/api/addProduct", data).then(function (result) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("/addProduct", data).then(function (result) {
         _this2.$emit("addSuccess", result.data); // console.log(result);
 
       })["finally"](function (error) {
@@ -60442,7 +60442,7 @@ var render = function() {
         ]),
         _vm._v(" "),
         _c("add-product", {
-          attrs: { showModal: _vm.showModal, cats: _vm.categories },
+          attrs: { showModal: _vm.showModal, categories: _vm.categories },
           on: { toggelModal: _vm.toggelModal, addSuccess: _vm.addSuccess }
         })
       ],
@@ -60731,14 +60731,17 @@ var render = function() {
                               [_vm._v("Choose your categories")]
                             ),
                             _vm._v(" "),
-                            _vm._l(_vm.cats, function(c) {
+                            _vm._l(_vm.categories, function(category) {
                               return _c(
                                 "option",
-                                { key: c.id, domProps: { value: c } },
+                                {
+                                  key: category.id,
+                                  domProps: { value: category }
+                                },
                                 [
                                   _vm._v(
                                     "\n                " +
-                                      _vm._s(c.name) +
+                                      _vm._s(category.name) +
                                       "\n              "
                                   )
                                 ]
@@ -60751,11 +60754,11 @@ var render = function() {
                       _vm._v(" "),
                       _c(
                         "div",
-                        _vm._l(_vm.product.categories, function(cat, key) {
+                        _vm._l(_vm.product.categories, function(category, key) {
                           return _c(
                             "span",
                             {
-                              key: cat.id,
+                              key: category.id,
                               staticClass:
                                 "px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800 ml-1 relative hover:text-red-800 hover:bg-red-100 cursor-pointer",
                               on: {
@@ -60764,7 +60767,7 @@ var render = function() {
                                 }
                               }
                             },
-                            [_c("span", [_vm._v(_vm._s(cat.name))])]
+                            [_c("span", [_vm._v(_vm._s(category.name))])]
                           )
                         }),
                         0
@@ -73279,8 +73282,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/bigsur/Desktop/files 2/NextMEDIA/tech-challenge/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /Users/bigsur/Desktop/files 2/NextMEDIA/tech-challenge/resources/css/app.css */"./resources/css/app.css");
+__webpack_require__(/*! /Users/bigsur/Desktop/tech-challenge/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /Users/bigsur/Desktop/tech-challenge/resources/css/app.css */"./resources/css/app.css");
 
 
 /***/ })

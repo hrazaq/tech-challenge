@@ -1,16 +1,16 @@
 <?php
 
-namespace App\Console\Commands\CategoryCli;
+namespace App\Console\Commands\Category;
 
 use Illuminate\Console\Command;
-use App\Services\CategoryService;
+use App\Services\Category\CategoryService;
 use Illuminate\Http\Request;
 
-class DropCategory extends Command
+class DeleteCategory extends Command
 {
     /**
      *
-     * @var App\Services\CategoryService
+     * @var App\Services\Category\CategoryService
      */
     protected $categoryService;
 
@@ -19,7 +19,7 @@ class DropCategory extends Command
      *
      * @var string
      */
-    protected $signature = 'drop:category {category_id}';
+    protected $signature = 'category:delete {category_id}';
 
     /**
      * The console command description.
@@ -35,8 +35,8 @@ class DropCategory extends Command
      */
     public function __construct(CategoryService $categoryService)
     {
-        $this->categoryService = $categoryService;
         parent::__construct();
+        $this->categoryService = $categoryService;
     }
 
     /**
@@ -46,7 +46,7 @@ class DropCategory extends Command
      */
     public function handle()
     {
-        $category = $this->categoryService->delete($this->argument('category_id'));
+        $this->categoryService->delete($this->argument('category_id'));
         $this->info("Category deleted!");
     }
 }

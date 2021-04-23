@@ -1,18 +1,18 @@
 <?php
 
-namespace App\Console\Commands\ProductCli;
+namespace App\Console\Commands\Product;
 
-use App\Services\ProductService;
+use App\Services\Product\ProductService;
 use Illuminate\Console\Command;
 
-class DropProduct extends Command
+class DeleteProduct extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'drop:product {product_id}';
+    protected $signature = 'product:delete {product_id}';
 
     /**
      * The console command description.
@@ -31,7 +31,6 @@ class DropProduct extends Command
     public function __construct(ProductService $productService)
     {
         parent::__construct();
-
         $this->productService = $productService;
     }
 
@@ -42,13 +41,7 @@ class DropProduct extends Command
      */
     public function handle()
     {
-        $id = $this->argument('product_id');
-        $existed = $this->productService->find($id);
-        if ($existed) {
-            $this->productService->delete($id);
-            $this->info("Product Deleted successfully");
-        } else {
-            $this->info("There is no product with the gived id!!");
-        }
+        $this->productService->delete($this->argument('product_id'));
+        $this->info("Product Deleted successfully");        
     }
 }

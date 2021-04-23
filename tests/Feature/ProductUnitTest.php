@@ -25,7 +25,7 @@ class ProductUnitTest extends TestCase
         
         $data = ['product' => $product, 'categories' => null];
 
-        $response = $this->json('POST', '/api/addProduct', $data);
+        $response = $this->json('POST', '/addProduct', $data);
 
         $response->assertStatus(201);
     }

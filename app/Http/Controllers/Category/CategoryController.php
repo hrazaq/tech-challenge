@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Category;
 
-use App\Services\CategoryService;
+use App\Services\Category\CategoryService;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class CategoryController extends Controller
 {
@@ -14,14 +15,9 @@ class CategoryController extends Controller
         $this->categoryService = $categoryService;
     }
     
+    // Get all Categories
     public function all()
     {
-        return $this->categoryService->all();
+        return response()->json($this->categoryService->all(), 200);
     }
-
-    public function getIds()
-    {
-        return $this->categoryService->getIds();
-    }
-
 }

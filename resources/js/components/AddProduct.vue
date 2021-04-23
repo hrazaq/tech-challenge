@@ -88,19 +88,19 @@
                 v-model="selectedCategorie"
               >
                 <option value="null" class="text-gray-300" disabled>Choose your categories</option>
-                <option :value="c" :key="c.id" v-for="c in cats">
-                  {{ c.name }}
+                <option :value="category" :key="category.id" v-for="category in categories">
+                  {{ category.name }}
                 </option>
               </select>
             </div>
             <div>
               <span
-                v-for="(cat, key) in product.categories"
-                :key="cat.id"
+                v-for="(category, key) in product.categories"
+                :key="category.id"
                 @click="removeCat(key)"
                 class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-blue-100 text-blue-800 ml-1 relative hover:text-red-800 hover:bg-red-100 cursor-pointer"
               >
-                <span>{{ cat.name }}</span>
+                <span>{{ category.name }}</span>
               </span>
             </div>
           </div>
@@ -142,7 +142,7 @@
 <script>
 import Axios from "axios";
 export default {
-  props: ["showModal", "cats"],
+  props: ["showModal", "categories"],
   data() {
     return {
       url: "",
@@ -166,7 +166,7 @@ export default {
         }
 
         Axios
-        .post('api/image', formData, config)
+        .post('/image', formData, config)
         .then(response =>{
           this.product.image = response.data['imagelink'];
           // console.log(response);
@@ -188,7 +188,7 @@ export default {
 
       // console.log(data);
       
-      Axios.post("/api/addProduct", data)
+      Axios.post("/addProduct", data)
         .then((result) => {
           this.$emit("addSuccess", result.data);
           // console.log(result);

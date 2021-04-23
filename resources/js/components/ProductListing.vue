@@ -98,7 +98,7 @@
         v-on:toggelModal="toggelModal"
         v-on:addSuccess="addSuccess"
         :showModal="showModal"
-        :cats="categories"
+        :categories="categories"
       ></add-product>
     </div>
   </div>
@@ -112,13 +112,13 @@ export default {
     addProduct,
   },
   mounted() {
-    Axios.get("/api/products")
+    Axios.get("/products")
       .then((result) => {
         this.products = result.data;
         this.filredProducts = this.products;
       })
       .catch((error) => console.log(error));
-    Axios.get("/api/categories")
+    Axios.get("/categories")
       .then((result) => (this.categories = result.data))
       .catch((error) => console.log(error));
   },
@@ -139,23 +139,23 @@ export default {
       return 'storage' + link;
     },
     sortByName() {
-      this.filredProducts = _.sortBy(this.filredProducts, (x) => x.name.toLowerCase());
+      this.filredProducts = _.sortBy(this.filredProducts, (product) => product.name.toLowerCase());
     },
     sortByPrice() {
-      this.filredProducts = _.sortBy(this.filredProducts, (x) => parseFloat(x.price));
+      this.filredProducts = _.sortBy(this.filredProducts, (product) => parseFloat(product.price));
     },
     categorieChanged() {
       if (this.selectedCatgorie == null) {
         this.filredProducts = this.products;
       } else {
-        Axios.get("/api/category/" + this.selectedCatgorie.id+"/products").then((result) => {
+        Axios.get("/category/" + this.selectedCatgorie.id+"/products").then((result) => {
           this.filredProducts = result.data;
         });
       }
     },
-    addSuccess(p) {
+    addSuccess(product) {
       this.toggelModal();
-      this.products.push(p);
+      this.products.push(product);
     },
   },
 };
